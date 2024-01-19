@@ -328,4 +328,4 @@ int main()
 }
 ```
 
-![Create Process Output](../images/code-screenshots/11-createprocess.png)
+![Create Process Output](https://github.com/Sohamkadam333/system_programming_doc/blob/main/images/code-screenshots/11-createprocess.png?raw=true)

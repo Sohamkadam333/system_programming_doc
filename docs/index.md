@@ -328,4 +328,193 @@ int main()
 }
 ```
 
-![Create Process Output](https://github.com/Sohamkadam333/system_programming_doc/blob/main/images/code-screenshots/11-createprocess.png?raw=true)
+![Create Process Output](code-screenshots/11-createprocess.png)
+
+
+---
+
+## 12 Create Thread  
+
+```cpp
+#include<windows.h>
+#include<iostream>
+using namespace std;
+
+DWORD WINAPI ThreadFun(LPVOID lparam);
+
+int main()
+{
+	HANDLE hThread = NULL;
+	DWORD dwThreadID = NULL;
+
+	hThread = CreateThread(
+		NULL,
+		0,
+		ThreadFun,
+		NULL,
+		0,
+		&dwThreadID);
+
+	if(hThread == NULL)
+	{
+		cout<<"Thread Creation Failed, Error = "<<GetLastError()<<endl;
+		system("PAUSE");
+		return 0;
+	}
+
+	cout<<"Thread Creation Success"<<endl;
+	cout<<"ThreadID = "<<dwThreadID<<endl;
+	CloseHandle(hThread);
+	system("PAUSE");
+
+}
+
+DWORD WINAPI ThreadFun(LPVOID lparam)
+{
+	cout<<"Thread Fun Running ";
+	Sleep(5000);
+	return 0;
+}
+```
+
+### Code Screenshot
+![Create Process Output](code-screenshots/12-createThread.png)
+
+
+---
+
+## 13 Addition Using Thread
+
+```cpp
+#include<iostream>
+#include<windows.h>
+using namespace std;
+
+int a[2];
+DWORD WINAPI ThreadFun(LPVOID lParam);
+
+int main()
+{
+  DWORD dwThreadID = NULL;
+  cout<<"Enter 1 num : "<<endl;
+  cin>>a[0];
+  cout<<"Enter 2 num : "<<endl;
+  cin>>a[1];
+  cout<<"Thread Created";
+
+  HANDLE hThread = CreateThread(
+    NULL,
+    0,
+    ThreadFun,
+    (void*)&a,
+    0,
+    &dwThreadID);
+
+  CloseHandle(hThread);
+  cout<<"Thread Closed"<<endl;
+  system("PAUSE");
+}
+
+DWORD WINAPI ThreadFun(LPVOID lParam)
+{
+  cout<<"Result = "<<a[0]+a[1]<<endl;
+  return 0;
+}
+```
+
+## Output Screenshot
+![Create Process Output](code-screenshots/13-additionUsingThread.png)
+
+
+--- 
+
+## 14 UnNamed Mutex
+
+```cpp
+// UnNamed Mutex
+#include<iostream>
+#include<windows.h>
+using namespace std;
+
+int main()
+{
+  HANDLE hMutex = NULL;
+  hMutex = CreateMutex(NULL,FALSE,NULL);
+
+  if(hMutex = NULL)
+  {
+    cerr<<"Error Creating Mutex, Error No : "<<GetLastError()<<endl;
+    system("PAUSE");
+    return 0;
+  }
+
+  cout<<"Mutex Creation Success"<<endl;
+  CloseHandle(hMutex);
+  system("PAUSE");
+  return 0;
+}
+```
+
+## Output Screenshot
+![Create Process Output](code-screenshots/14-unNamedMutex.png)
+
+---
+
+## 15 Named Mutex
+
+```cpp
+#include<iostream>
+#include<windows.h>
+using namespace std;
+
+int main()
+{
+  HANDLE hMutex = NULL;
+  cout<<"MyMutex"<<endl;
+  hMutex = CreateMutex(NULL,FALSE,L"MyMutex");
+
+  if(hMutex = NULL)
+  {
+    cerr<<"Error Creating Mutex, Error No : "<<GetLastError()<<endl;
+    system("PAUSE");
+    return 0;
+  }
+
+  cout<<"Mutex Creation Success"<<endl;
+  //CloseHandle(hMutex);
+  system("PAUSE");
+  return 0;
+}
+```
+
+## Output Screenshot
+![Create Process Output](code-screenshots/15-namedMutex.png)
+
+---
+
+## 16 Open Mutex
+
+```cpp
+#include<iostream>
+#include<windows.h>
+using namespace std;
+
+int main()
+{
+  HANDLE hMutex = NULL;
+  cout<<"Open Mutex Fun"<<endl;
+  hMutex = OpenMutex(MUTEX_ALL_ACCESS,FALSE,L"MyMutex");
+
+  if(hMutex = NULL)
+  {
+    cerr<<"Mutex Opened Failed : "<<GetLastError()<<endl;
+    system("PAUSE");
+    return 0;
+  }
+
+  cout<<"Mutex Open Success"<<endl;
+  CloseHandle(hMutex);
+  system("PAUSE");
+  return 0;
+}
+```
